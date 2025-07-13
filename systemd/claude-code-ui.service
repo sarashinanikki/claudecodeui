@@ -1,0 +1,31 @@
+[Unit]
+Description=Claude Code UI with ngrok tunnel
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/claude-code-ui
+ExecStart=/opt/claude-code-ui/scripts/start-with-ngrok.sh
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=claude-code-ui
+
+# Environment variables
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=NGROK_AUTH_TOKEN=
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
